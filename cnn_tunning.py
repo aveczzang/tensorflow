@@ -49,8 +49,8 @@ h_pool1 = max_pool_2x2(h_conv1)
 # Convolutional layer 2
 # second CNN layer: CONV -> RELU -> POOL
 # We use 5x5 patch, accept 32 channel, and produce 64.
-W_conv2 = weight_variable([5, 5, 2, 64]) # 필터, 5*5, 32개 input, 64개 필터
-b_conv2 = bias_variable([64]) # 64개 features
+W_conv2 = weight_variable([5, 5, 2, 4]) # 필터, 5*5, 32개 input, 64개 필터
+b_conv2 = bias_variable([4]) # 64개 features
 h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
 h_pool2 = max_pool_2x2(h_conv2)
 
@@ -58,9 +58,9 @@ h_pool2 = max_pool_2x2(h_conv2)
 # fc(fully connected). fully connected layer with 1024 neurons: FC -> RELU
 # hidden layer : 1024 neurons
 # Images are reduced to 7x7 and reshaped.
-W_fc1 = weight_variable([7 * 7 * 64, 1024])
+W_fc1 = weight_variable([7 * 7 * 4, 1024])
 b_fc1 = bias_variable([1024])
-h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 64]) # 1차원 배열로 reshape. dimention은 -1로 하나 줄임.
+h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 4]) # 1차원 배열로 reshape. dimention은 -1로 하나 줄임.
 h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1) # hidden neurons의 output
 
 # neuron dropout to avoid overfitting
